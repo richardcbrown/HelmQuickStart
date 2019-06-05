@@ -1,0 +1,79 @@
+version: "3"
+
+services:
+
+  orchestrator:
+    image: rtweed/qewd-server
+    ports:
+      - "8080:8080"
+    volumes:
+      - ".\\QEWD-Courier\\helm:/opt/qewd/mapped"
+      - ".\\QEWD-Courier\\yottaDB\\orchestrator:/root/.yottadb/r1.24_x86_64/g"
+    networks: 
+      - qewd-net
+
+  initialisation_service:
+    image: rtweed/qewd-server
+    volumes:
+      - ".\\QEWD-Courier\\helm:/opt/qewd/mapped"
+    environment:
+      - microservice=initialisation_service
+    ports:
+      - "8093:8080"
+    networks:
+      - qewd-net
+
+  openehr_service:
+    image: rtweed/qewd-server
+    ports:
+      - "8082:8080"
+    volumes:
+      - ".\\QEWD-Courier\\helm:/opt/qewd/mapped"
+      - ".\\QEWD-Courier\\yottaDB\\openehr_service:/root/.yottadb/r1.24_x86_64/g"
+    networks:
+      - qewd-net
+    environment:
+      - microservice=openehr_service
+  
+  fhir_service:
+    image: rtweed/qewd-server
+    ports:
+      - "8085:8080"
+    volumes:
+      - ".\\QC-MPI-Microservice\\:/opt/qewd/mapped"
+      - ".\\QC-MPI-Microservice\\yottaDB:/root/.yottadb/r1.24_x86_64/g"
+    networks:
+      - qewd-net
+    environment:
+      - mode=microservice
+      - node_env=development
+
+  oidc_client:
+    image: rtweed/qewd-server
+    volumes:
+      - ".\\oidc-client:/opt/qewd/mapped"
+    environment:
+      - mode=microservice
+    networks:
+      - qewd-net
+
+  oidc-provider:
+    image: rtweed/qewd-server
+    ports:
+      - 8091:8080
+    volumes:
+      - ".\\oidc-provider:/opt/qewd/mapped"
+    networks:
+      - qewd-net
+
+  dmz:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ".\\PulseTile-RA\\build:/usr/share/nginx/html"
+      - ".\\PulseTile-RA\\default.conf:/etc/nginx/conf.d/default.conf"
+      - ".\\PulseTile-RA\\nginx.conf:/etc/nginx/nginx.conf"
+
+networks:
+  qewd-net:

@@ -1,0 +1,41 @@
+{
+  "oidc_provider": {
+    "host": "http://helm-local.com:8091",
+    "urls": {
+      "issuer": "/openid",
+      "authorization_endpoint": "/openid/auth",
+      "token_endpoint": "/openid/token",
+      "userinfo_endpoint": "/openid/me",
+      "introspection_endpoint": "/openid/token/introspect",
+      "jwks_endpoint": "/openid/certs",
+      "end_session_endpoint": "/openid/session/end"
+    },
+    "type": "OpenID Connect",
+    "client_id": "test",
+    "client_secret": "dcae4e98-61e7-43f5-bcac-fe196cc5d627",
+    "scope": {
+      "login": "openid profile"
+    },
+    "defaultHttpOptions": {
+      "rejectUnauthorized": true,
+      "timeout": 15000
+    },
+    "authorize_additional_query_string_values": {
+      "prompt": "login"
+    },
+    "logout_approach": "client"
+  },
+  "orchestrator": {
+    "host": "http://helm-local.com:80",
+    "urls": {
+      "callback_url": "/api/auth/token",
+      "post_logout_redirect_uri": "/",
+      "index_url": "/#/login"
+    },
+    "set_cookie": {
+      "name": "JSESSIONID",
+      "path": "/"
+    }
+  },
+  "extract_idToken_fields": "/opt/qewd/mapped/configuration/extract_idToken_fields.js"
+}
