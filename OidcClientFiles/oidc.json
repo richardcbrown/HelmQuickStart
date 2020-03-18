@@ -37,5 +37,8 @@
       "path": "/"
     }
   },
+  "client_config": {
+    "timeout": 1200
+  },
   "extract_idToken_fields": "/opt/qewd/mapped/configuration/extract_idToken_fields.js"
 }

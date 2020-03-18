@@ -23,6 +23,29 @@ services:
     networks:
       - qewd-net
 
+  transformation_service:
+    image: rtweed/qewd-server
+    volumes:
+      - ".\\QEWD-Courier\\helm:/opt/qewd/mapped"
+    environment:
+      - microservice=transformation_service
+    ports:
+      - "8094:8080"
+    networks:
+      - qewd-net
+
+  consent_service:
+    image: rtweed/qewd-server
+    volumes:
+      - ".\\QEWD-Courier\\helm:/opt/qewd/mapped"
+    environment:
+      - microservice=consent_service
+      - node_env=development
+    ports:
+      - "8095:8080"
+    networks:
+      - qewd-net
+
   openehr_service:
     image: rtweed/qewd-server
     ports:
@@ -74,6 +97,8 @@ services:
       - ".\\PulseTile-RA\\build:/usr/share/nginx/html"
       - ".\\PulseTile-RA\\default.conf:/etc/nginx/conf.d/default.conf"
       - ".\\PulseTile-RA\\nginx.conf:/etc/nginx/nginx.conf"
+    networks:
+      - qewd-net
 
 networks:
   qewd-net:

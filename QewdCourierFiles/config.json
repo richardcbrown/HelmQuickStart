@@ -41,6 +41,20 @@
         "serverName": "OpenEHR MicroService",
         "poolSize": 4
       }
+    },
+    {
+      "name": "transformation_service",
+      "qewd": {
+        "serverName": "Transformation MicroService",
+        "poolSize": 4
+      }
+    },
+    {
+      "name": "consent_service",
+      "qewd": {
+        "serverName": "Consent MicroService",
+        "poolSize": 4
+      }
     }
   ]
 }

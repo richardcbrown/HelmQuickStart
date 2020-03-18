@@ -55,8 +55,18 @@
   {
     "uri": "/api/hscn/:site/top3Things/:patientId",
     "method": "GET",
+    "handler": "transformTopThreeThings",
+    "on_microservice": "transformation_service",
+    "authenticate": false
+  },
+  {
+    "uri": "/api/openehr/hscn/:site/top3Things/:patientId",
+    "method": "GET",
     "handler": "getPatientTop3ThingsHscnDetail",
     "on_microservice": "openehr_service",
+    "from_microservices": [
+      "transformation_service"
+    ],
     "authenticate": false
   },
   {
@@ -89,42 +99,42 @@
     "method": "GET",
     "handler": "getRedirect",
     "authenticate": false,
-    "on_microservice": "oidc_client"
+    "on_microservice": "auth_service"
   },
   {
     "uri": "/api/auth/redirect",
     "method": "GET",
     "handler": "getRedirect",
     "authenticate": false,
-    "on_microservice": "oidc_client"
+    "on_microservice": "auth_service"
   },
   {
     "uri": "/auth/token",
     "method": "GET",
     "handler": "oidc_callback",
     "authenticate": false,
-    "on_microservice": "oidc_client"
+    "on_microservice": "auth_service"
   },
   {
     "uri": "/api/auth/token",
     "method": "GET",
     "handler": "oidc_callback",
     "authenticate": false,
-    "on_microservice": "oidc_client"
+    "on_microservice": "auth_service"
   },
   {
     "uri": "/auth/logout",
     "method": "GET",
     "handler": "logout",
-    "on_microservice": "oidc_client",
-    "authenticate": false
+    "authenticate": false,
+    "on_microservice": "auth_service"
   },
   {
     "uri": "/api/auth/logout",
     "method": "GET",
     "handler": "logout",
-    "on_microservice": "oidc_client",
-    "authenticate": false
+    "authenticate": false,
+    "on_microservice": "auth_service"
   },
   {
     "uri": "/api/demographics/:patientId",
@@ -137,16 +147,28 @@
     "method": "GET",
     "handler": "getPolicies",
     "from_microservices": [
-      "initialisation_service"
+      "initialisation_service",
+      "transformation_service"
     ],
     "on_microservice": "fhir_service"
   },
   {
-    "uri": "/api/fhir/getPatientConsent",
+    "uri": "/api/fhir/patient/:patientId",
+    "method": "GET",
+    "handler": "getPatient",
+    "from_microservices": [
+      "transformation_service",
+      "consent_service"
+    ],
+    "on_microservice": "fhir_service"
+  },
+  {
+    "uri": "/api/fhir/getPatientConsent/:patientId",
     "method": "GET",
     "handler": "getPatientConsent",
     "from_microservices": [
-      "initialisation_service"
+      "initialisation_service",
+      "transformation_service"
     ],
     "on_microservice": "fhir_service"
   },
@@ -158,5 +180,41 @@
       "initialisation_service"
     ],
     "on_microservice": "fhir_service"
+  },
+  {
+    "uri": "/api/consent/send/:patientId",
+    "method": "POST",
+    "handler": "sendConsent",
+    "on_microservice": "consent_service",
+    "from_microservices": [
+      "initialisation_service"
+    ]
+  },
+  {
+    "uri": "/api/consent/patients",
+    "method": "POST",
+    "handler": "getPatients",
+    "on_microservice": "consent_service",
+    "from_microservices": [
+      "consent_service"
+    ]
+  },
+  {
+    "uri": "/api/consent/patient/:patientId",
+    "method": "POST",
+    "handler": "setPatient",
+    "on_microservice": "consent_service",
+    "from_microservices": [
+      "consent_service"
+    ]
+  },
+  {
+    "uri": "/api/consent/process",
+    "method": "POST",
+    "handler": "processConsent",
+    "on_microservice": "consent_service",
+    "from_microservices": [
+      "consent_service"
+    ]
   }
 ]

@@ -9,35 +9,37 @@ The following set of projects will need to be pulled from github:
 ## PulseTile
 
 PulseTile is currently available at:
-https://github.com/richardcbrown/PulseTile-RA/tree/release/1.0.0
+https://github.com/LeedsCC/PulseTile-RA.git
 And serves as the front end of the Helm project.
 
 ## Qewd-Courier
 
 Qewd-Courier is currently available at:
-https://github.com/richardcbrown/QEWD-Courier/tree/release/1.0.0
+https://github.com/LeedsCC/QEWD-Courier.git
 Qewd-Courier provides several core microservices to the middleware of Helm.
 The microservices we currently use from Qewd-Courier are:
 - initialisation_service - this service allows for coordination of tasks that need to be performed by other microservices when a user first logs into Helm.
 - openehr_service - provides connectivity to EtherCIS for the Qewd middleware.
 - orchestrator - service that provides overarching coordination of Qewd services.
+- transformation_service - this provides a transformed T3T response to LTHT.
+- consent_service - provides consent information to LTHT.
 
 ## Qewd System of Systems integration service
 
 The System of System integration service is currently available at:
-https://github.com/richardcbrown/QC-MPI-Microservice/tree/release/1.0.0
+https://github.com/LeedsCC/QC-MPI-Microservice.git
 This service provides connectivity between the Qewd middleware and the system of systems.
 
 ## Qewd Oidc Client
 
 The oidc client is currently available at:
-https://github.com/LeedsCC/oidc-client
+https://github.com/LeedsCC/oidc-client.git
 The oidc client delegates authentication to NHS login and handles the setup of tokens for users within Qewd.
 
 ## Qewd Oidc Provider
 
 The oidc provider is currently available at:
-https://github.com/LeedsCC/oidc-provider
+https://github.com/LeedsCC/oidc-provider.git
 The oidc provider service is used to allow pulling of Helm data by healthcare trusts. It is also used locally to mock NHS login functionality.
 
 ## EtherCIS
