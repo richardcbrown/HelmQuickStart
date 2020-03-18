@@ -71,7 +71,7 @@ services:
       - mode=microservice
       - node_env=development
 
-  oidc_client:
+  auth_service:
     image: rtweed/qewd-server
     volumes:
       - ".\\oidc-client:/opt/qewd/mapped"

@@ -26,7 +26,7 @@
       }
     },
     {
-      "name": "oidc_client",
+      "name": "auth_service",
       "apis": {
         "import": true
       },
